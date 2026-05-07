@@ -59,3 +59,10 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 .env.production
 .env.development
+
+# Prisma
+/prisma/migrations_backup
+/.env
+/node_modules
+*.db
+*.db-journal

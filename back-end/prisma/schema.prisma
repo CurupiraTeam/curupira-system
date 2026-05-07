@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum PapelUsuario {
+  ADMIN
+  CIDADAO
+}
+
+enum StatusRelato {
+  ATIVO
+  RESOLVIDO
+  FALSO
+}
+
+model Usuario {
+  id        String       @id @default(uuid())
+  nome      String
+  email     String       @unique
+  senha     String
+  papel     PapelUsuario @default(CIDADAO)
+  criado_em DateTime     @default(now())
+
+  relatos RelatoUsuario[]
+
+  @@map("usuarios")
+}
+
+model CategoriaRelato {
+  id        Int     @id @default(autoincrement())
+  nome      String  @unique
+  icone_url String?
+
+  relatos_usuarios RelatoUsuario[]
+  relatos_oficiais RelatoOficial[]
+
+  @@map("categorias_relato")
+}
+
+model RelatoUsuario {
+  id                  String          @id @default(uuid())
+  usuario_id          String
+  categoria_id        Int
+  latitude            Float
+  longitude           Float
+  descricao           String?
+  referencia_endereco String?
+  status              StatusRelato    @default(ATIVO)
+  criado_em           DateTime        @default(now())
+
+  usuario   Usuario         @relation(fields: [usuario_id], references: [id])
+  categoria CategoriaRelato @relation(fields: [categoria_id], references: [id])
+
+  @@map("relatos_usuarios")
+}
+
+model RelatoOficial {
+  id           String   @id @default(uuid())
+  fonte        String   // Ex: INPA, SELVA
+  id_externo   String?
+  categoria_id Int
+  latitude     Float
+  longitude    Float
+  metadados    Json?    // Dados extras retornados pela API parceira
+  detectado_em DateTime
+
+  categoria CategoriaRelato @relation(fields: [categoria_id], references: [id])
+
+  @@map("relatos_oficiais")
+}

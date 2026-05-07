@@ -1,0 +1,61 @@
+# previous_head="$1"
+# new_head="$2"
+# checkout_flag="$3"
+
+# if [ "$checkout_flag" = "1" ]; then
+    
+#     current_branch=$(git rev-parse --abbrev-ref HEAD)
+
+#     if [ "$current_branch" = "main" ] || [ "$current_branch" = "master" ] || [ "$current_branch" = "develop" ]; then
+#         exit 0
+#     fi
+
+#     branch_reflog=$(git reflog show --no-abbrev "$current_branch" -n 1 2>/dev/null)
+
+#     if echo "$branch_reflog" | grep -q "branch: Created from"; then
+        
+#         main_sha=$(git rev-parse main 2>/dev/null)
+        
+#         if [ "$previous_head" != "$main_sha" ]; then
+#               echo ""
+#               echo -e "\033[1;31m🛑 ERRO: BRANCH CRIADA A PARTIR DE FONTE INVALIDA!\033[0m"
+#               echo -e "\033[1;33mVocê deve criar branches APENAS a partir da 'main'.\033[0m"
+#               echo -e "Fonte detectada: $previous_head"
+#               echo -e "Esperado (main): $main_sha"
+              
+#               echo -e "\033[1;36m🔄 Revertendo para a branch anterior...\033[0m"
+#               git checkout - > /dev/null 2>&1
+#               if [ $? -eq 0 ]; then
+#                   git branch -D "$current_branch" > /dev/null 2>&1
+#                   echo -e "\033[1;32m✅ Branch inválida excluída. Seus arquivos foram preservados.\033[0m"
+#               else
+#                   echo -e "\033[1;31m⚠️  Falha ao voltar para branch anterior. A branch inválida '$current_branch' foi mantida.\033[0m"
+#               fi
+#               exit 1
+#         fi
+
+        
+#         valid_regex="^[a-z0-9-]+\/(feat|fix|chore|docs|style|refactor|perf|test|build|ci|revert)\/[a-z0-9-]+$"
+
+#         if ! echo "$current_branch" | grep -E -q "$valid_regex"; then
+#               echo ""
+#               echo -e "\033[1;31m🛑 ERRO: NOME DA BRANCH FORA DO PADRÃO!\033[0m"
+#               echo -e "\033[1;33mFormato Obrigatório:\033[0m [dev]/[tipo]/[descricao]"
+#               echo -e "\033[1;33mExemplo:\033[0m lucas/feat/nova-tela-login"
+#               echo -e "\033[1;33mTipos Aceitos:\033[0m feat, fix, chore, docs, style, refactor, perf, test"
+#               echo -e "\033[1;33mSua Branch:\033[0m $current_branch"
+
+#               echo -e "\033[1;36m🔄 Revertendo para a main...\033[0m"
+#               git checkout - > /dev/null 2>&1
+#               if [ $? -eq 0 ]; then
+#                   git branch -D "$current_branch" > /dev/null 2>&1
+#                   echo -e "\033[1;32m✅ Branch inválida excluída. Seus arquivos foram preservados.\033[0m"
+#               else
+#                   echo -e "\033[1;31m⚠️  Falha ao voltar para branch anterior. A branch inválida '$current_branch' foi mantida.\033[0m"
+#               fi
+#               exit 1
+#         fi
+        
+#         echo -e "\033[1;32m✅ Branch '$current_branch' criada com sucesso seguindo os padrões!\033[0m"
+#     fi
+# fi
