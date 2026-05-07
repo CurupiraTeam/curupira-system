@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: curupira-db
+    restart: always
+    environment:
+      POSTGRES_USER: curupira
+      POSTGRES_PASSWORD: curupira_password
+      POSTGRES_DB: curupira_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - curupira-db-data:/var/lib/postgresql/data
+    networks:
+      - curupira-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: curupira-redis
+    restart: always
+    ports:
+      - "6380:6379"
+    volumes:
+      - curupira-redis-data:/data
+    networks:
+      - curupira-network
+
+volumes:
+  curupira-db-data:
+  curupira-redis-data:
+
+networks:
+  curupira-network:
+    driver: bridge

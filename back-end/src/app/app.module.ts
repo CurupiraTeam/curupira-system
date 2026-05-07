@@ -10,6 +10,8 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { HttpExceptionFilter } from 'src/commons/filters/httpExceptionFilter';
 import { ExternalsModule } from 'src/externals/externals.module';
 import { ExampleModule } from './example/example.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -21,6 +23,8 @@ import { ExampleModule } from './example/example.module';
     EventEmitterModule.forRoot(),
     ExternalsModule,
     ExampleModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [],
   providers: [

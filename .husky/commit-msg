@@ -1,0 +1,37 @@
+cd back-end
+
+# npx --no -- commitlint --edit "${1}"
+
+
+if ! npx --no -- commitlint --edit "${1}"; then
+    echo ""
+    echo -e "\033[1;31m--------------------------------------------------------\033[0m"
+    echo -e "\033[1;31m🚨 OPS! SEU COMMIT ESTÁ FORA DO PADRÃO.\033[0m"
+    echo -e "\033[1;31m--------------------------------------------------------\033[0m"
+    echo ""
+    echo -e "\033[1;33mFORMATO OBRIGATÓRIO:\033[0m"
+    echo "  tipo(escopo): descrição curta em minusculo"
+    echo ""
+    echo -e "\033[1;33mTIPOS PERMITIDOS (O que você fez?):\033[0m"
+    echo "  feat     -> Nova funcionalidade"
+    echo "  fix      -> Correção de bug"
+    echo "  chore    -> Configurações / Tarefas internas"
+    echo "  docs     -> Documentação"
+    echo "  refactor -> Melhoria de código (sem mudar logica)"
+    echo ""
+    echo -e "\033[1;33mESCOPOS PERMITIDOS (Onde você mexeu?):\033[0m"
+    echo "  (front)  -> Angular / Telas"
+    echo "  (back)   -> NestJS / API"
+    echo "  (repo)   -> Raiz / Configurações"
+    echo "  (shared) -> Código compartilhado"
+    echo ""
+    echo -e "\033[1;32m✅ EXEMPLOS CORRETOS (COPIE E COLE):\033[0m"
+    echo "  git commit -m \"feat(front): cria dashboard de vendas\""
+    echo "  git commit -m \"fix(back): corrige erro 500 no login\""
+    echo "  git commit -m \"chore(repo): atualiza libs\""
+    echo ""
+    echo -e "\033[1;31m--------------------------------------------------------\033[0m"
+    
+    # 3. Agora sim, saímos com erro para bloquear o commit
+    exit 1
+fi
