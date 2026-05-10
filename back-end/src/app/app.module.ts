@@ -12,7 +12,8 @@ import { ExternalsModule } from 'src/externals/externals.module';
 import { ExampleModule } from './example/example.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-
+import { ArduinoService } from '../arduino/arduino.service';
+import { ArduinoGateway } from 'src/arduino/arduino.gateway';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -28,6 +29,8 @@ import { UsersModule } from './users/users.module';
   ],
   controllers: [],
   providers: [
+    ArduinoService,
+    ArduinoGateway,
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
@@ -46,4 +49,4 @@ import { UsersModule } from './users/users.module';
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}
