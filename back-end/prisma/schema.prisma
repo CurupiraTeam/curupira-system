@@ -18,6 +18,13 @@ enum StatusRelato {
   FALSO
 }
 
+enum NivelLog {
+  INFO
+  AVISO
+  ERRO
+  DEBUG
+}
+
 model Usuario {
   id        String       @id @default(uuid())
   nome      String
@@ -43,15 +50,16 @@ model CategoriaRelato {
 }
 
 model RelatoUsuario {
-  id                  String          @id @default(uuid())
+  id                  String        @id @default(uuid())
   usuario_id          String
   categoria_id        Int
   latitude            Float
   longitude           Float
   descricao           String?
   referencia_endereco String?
-  status              StatusRelato    @default(ATIVO)
-  criado_em           DateTime        @default(now())
+  status              StatusRelato  @default(ATIVO)
+  criado_em           DateTime      @default(now())
+  midias              MidiaRelato[] // Um relato pode ter várias fotos
 
   usuario   Usuario         @relation(fields: [usuario_id], references: [id])
   categoria CategoriaRelato @relation(fields: [categoria_id], references: [id])
@@ -59,17 +67,67 @@ model RelatoUsuario {
   @@map("relatos_usuarios")
 }
 
+model MidiaRelato {
+  id                String   @id @default(uuid())
+  url               String // Aqui ficara o link da foto (ex: do S3 ou Cloudinary)
+  relato_usuario_id String
+  criado_em         DateTime @default(now())
+
+  // Esta linha conecta a foto ao relato específico
+  relato_usuario RelatoUsuario @relation(fields: [relato_usuario_id], references: [id])
+
+  @@map("midias_relato")
+}
+
 model RelatoOficial {
   id           String   @id @default(uuid())
-  fonte        String   // Ex: INPA, SELVA
+  fonte        String // Ex: INPA, SELVA
   id_externo   String?
   categoria_id Int
   latitude     Float
   longitude    Float
-  metadados    Json?    // Dados extras retornados pela API parceira
+  metadados    Json? // Dados extras retornados pela API parceira
   detectado_em DateTime
 
   categoria CategoriaRelato @relation(fields: [categoria_id], references: [id])
 
   @@map("relatos_oficiais")
+}
+
+model LogDispositivo {
+  id             String   @id @default(uuid())
+  dispositivo_id String
+  nivel          NivelLog @default(INFO)
+  mensagem       String
+  detalhes       Json? // Para guardar erros técnicos
+  criado_em      DateTime @default(now())
+
+  dispositivo DispositivoSensor @relation(fields: [dispositivo_id], references: [id])
+
+  @@map("logs_dispositivos")
+}
+
+model DispositivoSensor {
+  id        String   @id @default(uuid())
+  nome      String // Ex: "Sensor_Bairro_Centro_01"
+  latitude  Float
+  longitude Float
+  criado_em DateTime @default(now())
+
+  leituras LeituraSensor[]
+  logs     LogDispositivo[] // Relação com a tabela de logs
+
+  @@map("dispositivos_sensores")
+}
+
+model LeituraSensor {
+  id             String   @id @default(uuid())
+  dispositivo_id String
+  valor          Float // Ex: 45.5 (concentração de partículas)
+  unidade        String   @default("µg/m³")
+  lido_em        DateTime @default(now())
+
+  dispositivo DispositivoSensor @relation(fields: [dispositivo_id], references: [id])
+
+  @@map("leituras_sensores")
 }
