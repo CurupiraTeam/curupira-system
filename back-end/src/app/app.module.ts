@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { Environment } from 'src/commons/configs/env/env.config';
@@ -18,8 +20,13 @@ import { CategoriasModule } from './categorias/categorias.module';
 import { RelatosModule } from './relatos/relatos.module';
 import { HealthModule } from './health/health.module';
 import { SensoresModule } from './sensores/sensores.module';
+import { EstatisticasModule } from './estatisticas/estatisticas.module';
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', '..', 'uploads'),
+      serveRoot: '/uploads',
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: Environment.get(),
@@ -34,6 +41,7 @@ import { SensoresModule } from './sensores/sensores.module';
     RelatosModule,
     HealthModule,
     SensoresModule,
+    EstatisticasModule,
   ],
   controllers: [],
   providers: [
