@@ -15,6 +15,8 @@ import { UsersModule } from './users/users.module';
 import { ArduinoService } from '../arduino/arduino.service';
 import { ArduinoGateway } from 'src/arduino/arduino.gateway';
 import { CategoriasModule } from './categorias/categorias.module';
+import { RelatosModule } from './relatos/relatos.module';
+import { HealthModule } from './health/health.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -28,6 +30,8 @@ import { CategoriasModule } from './categorias/categorias.module';
     AuthModule,
     UsersModule,
     CategoriasModule,
+    RelatosModule,
+    HealthModule,
   ],
   controllers: [],
   providers: [
