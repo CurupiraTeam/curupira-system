@@ -14,6 +14,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ArduinoService } from '../arduino/arduino.service';
 import { ArduinoGateway } from 'src/arduino/arduino.gateway';
+import { CategoriasModule } from './categorias/categorias.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -26,6 +27,7 @@ import { ArduinoGateway } from 'src/arduino/arduino.gateway';
     ExampleModule,
     AuthModule,
     UsersModule,
+    CategoriasModule,
   ],
   controllers: [],
   providers: [
