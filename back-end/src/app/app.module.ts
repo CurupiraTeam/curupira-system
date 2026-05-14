@@ -17,6 +17,7 @@ import { ArduinoGateway } from 'src/arduino/arduino.gateway';
 import { CategoriasModule } from './categorias/categorias.module';
 import { RelatosModule } from './relatos/relatos.module';
 import { HealthModule } from './health/health.module';
+import { SensoresModule } from './sensores/sensores.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -32,6 +33,7 @@ import { HealthModule } from './health/health.module';
     CategoriasModule,
     RelatosModule,
     HealthModule,
+    SensoresModule,
   ],
   controllers: [],
   providers: [

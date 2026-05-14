@@ -7,7 +7,6 @@ export class HealthService {
 
   async check() {
     try {
-      // Faz uma query simples para testar a conexão com o banco
       await this.prisma.$queryRaw`SELECT 1`;
       return { 
         status: 'UP', 
