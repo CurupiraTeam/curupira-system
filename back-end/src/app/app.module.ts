@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { Environment } from 'src/commons/configs/env/env.config';
@@ -14,8 +16,17 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ArduinoService } from '../arduino/arduino.service';
 import { ArduinoGateway } from 'src/arduino/arduino.gateway';
+import { CategoriasModule } from './categorias/categorias.module';
+import { RelatosModule } from './relatos/relatos.module';
+import { HealthModule } from './health/health.module';
+import { SensoresModule } from './sensores/sensores.module';
+import { EstatisticasModule } from './estatisticas/estatisticas.module';
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', '..', 'uploads'),
+      serveRoot: '/uploads',
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: Environment.get(),
@@ -26,6 +37,11 @@ import { ArduinoGateway } from 'src/arduino/arduino.gateway';
     ExampleModule,
     AuthModule,
     UsersModule,
+    CategoriasModule,
+    RelatosModule,
+    HealthModule,
+    SensoresModule,
+    EstatisticasModule,
   ],
   controllers: [],
   providers: [
