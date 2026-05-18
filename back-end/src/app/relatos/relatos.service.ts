@@ -1,9 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/commons/databases/prisma.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { StatusRelato } from '@prisma/client';
 
 @Injectable()
 export class RelatosService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly eventEmitter: EventEmitter2,
+  ) {}
 
   async createUsuarioRelato(usuarioId: string, data: any, file?: Express.Multer.File) {
     // Robust resolution of categoria_id to support both numeric and text slug formats
@@ -44,11 +49,13 @@ export class RelatosService {
       });
     }
 
+    this.eventEmitter.emit('relatos.change');
+
     return relato;
   }
 
   async createOficialRelato(data: any) {
-    return this.prisma.relatoOficial.create({
+    const relato = await this.prisma.relatoOficial.create({
       data: {
         fonte: data.fonte,
         id_externo: data.id_externo,
@@ -59,16 +66,33 @@ export class RelatosService {
         detectado_em: data.detectado_em ? new Date(data.detectado_em) : new Date(),
       },
     });
+
+    this.eventEmitter.emit('relatos.change');
+
+    return relato;
   }
 
   async findAllUnified(filters: { latMin?: string; latMax?: string; lngMin?: string; lngMax?: string }) {
+    // Only return ATIVO user reports
     const usuariosRaw = await this.prisma.relatoUsuario.findMany({
+      where: {
+        status: StatusRelato.ATIVO,
+      },
       include: {
         categoria: true,
       },
     });
 
+    // Only return official reports from the last 2 hours to keep dashboard fresh
+    const twoHoursAgo = new Date();
+    twoHoursAgo.setHours(twoHoursAgo.getHours() - 2);
+
     const oficiaisRaw = await this.prisma.relatoOficial.findMany({
+      where: {
+        detectado_em: {
+          gte: twoHoursAgo,
+        },
+      },
       include: {
         categoria: true,
       },

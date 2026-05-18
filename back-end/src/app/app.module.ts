@@ -21,6 +21,8 @@ import { RelatosModule } from './relatos/relatos.module';
 import { HealthModule } from './health/health.module';
 import { SensoresModule } from './sensores/sensores.module';
 import { EstatisticasModule } from './estatisticas/estatisticas.module';
+import { SimuladorModule } from './simulador/simulador.module';
+
 @Module({
   imports: [
     ServeStaticModule.forRoot({
@@ -42,6 +44,7 @@ import { EstatisticasModule } from './estatisticas/estatisticas.module';
     HealthModule,
     SensoresModule,
     EstatisticasModule,
+    SimuladorModule,
   ],
   controllers: [],
   providers: [

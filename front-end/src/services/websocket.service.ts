@@ -4,10 +4,12 @@ import { getSocketUrl } from './api/endpoints';
 
 type ArduinoListener = (event: ArduinoDataEvent) => void;
 type ConnectionListener = (state: RealtimeConnectionState) => void;
+type RelatosChangeListener = () => void;
 
 let socket: Socket | null = null;
 const arduinoListeners = new Set<ArduinoListener>();
 const connectionListeners = new Set<ConnectionListener>();
+const relatosChangeListeners = new Set<RelatosChangeListener>();
 
 export const WebSocketService = {
   connect() {
@@ -22,9 +24,15 @@ export const WebSocketService = {
     socket.on('disconnect', () => emitConnection('disconnected'));
     socket.io.on('reconnect_attempt', () => emitConnection('reconnecting'));
     socket.on('connect_error', () => emitConnection('error'));
+    
     socket.on('dados_arduino', (event: ArduinoDataEvent) => {
       arduinoListeners.forEach((listener) => listener(event));
     });
+
+    socket.on('relatos_change', () => {
+      relatosChangeListeners.forEach((listener) => listener());
+    });
+
     return socket;
   },
 
@@ -44,6 +52,12 @@ export const WebSocketService = {
     connectionListeners.add(listener);
     this.connect();
     return () => connectionListeners.delete(listener);
+  },
+
+  onRelatosChange(listener: RelatosChangeListener) {
+    relatosChangeListeners.add(listener);
+    this.connect();
+    return () => relatosChangeListeners.delete(listener);
   }
 };
 

@@ -14,19 +14,29 @@ export class ArduinoService implements OnModuleInit, OnModuleDestroy {
   private port!: SerialPort;
   private parser!: ReadlineParser;
 
-  // Ajuste conforme a porta que o seu Windows estiver usando
-  private readonly PORTA_COM = 'COM3';
-
   constructor(private eventEmitter: EventEmitter2) {}
 
   onModuleInit() {
     this.connectArduino();
   }
 
+  private getPortPath(): string {
+    if (process.env.ARDUINO_PORT) {
+      return process.env.ARDUINO_PORT;
+    }
+    // Auto-detect port path based on OS platform
+    if (process.platform === 'win32') {
+      return 'COM3';
+    }
+    // On Linux/macOS, default to standard serial ports
+    return '/dev/ttyUSB0';
+  }
+
   private connectArduino() {
+    const portPath = this.getPortPath();
     try {
       this.port = new SerialPort({
-        path: this.PORTA_COM,
+        path: portPath,
         baudRate: 9600,
         autoOpen: false,
       });
@@ -35,11 +45,11 @@ export class ArduinoService implements OnModuleInit, OnModuleDestroy {
 
       this.port.open((err) => {
         if (err) {
-          return this.logger.error(
-            `Falha ao abrir ${this.PORTA_COM}: ${err.message}`,
+          return this.logger.warn(
+            `Arduino não detectado na porta ${portPath}. Pulando conexão serial para o protótipo real. (Mensagem: ${err.message})`,
           );
         }
-        this.logger.log(`🚀 Conectado ao Arduino na porta ${this.PORTA_COM}`);
+        this.logger.log(`🚀 Conectado com sucesso ao protótipo Arduino na porta ${portPath}`);
       });
 
       this.parser.on('data', (data: string) => {
@@ -54,14 +64,14 @@ export class ArduinoService implements OnModuleInit, OnModuleDestroy {
       });
 
       this.port.on('close', () => {
-        this.logger.warn('Conexão Serial encerrada.');
+        this.logger.warn('Conexão Serial com o Arduino encerrada.');
       });
 
       this.port.on('error', (err) => {
-        this.logger.error(`Erro crítico na porta serial: ${err.message}`);
+        this.logger.warn(`Canal serial temporariamente indisponível: ${err.message}`);
       });
-    } catch (error) {
-      this.logger.error('Erro ao inicializar conexão serial', error);
+    } catch (error: any) {
+      this.logger.warn(`Não foi possível estabelecer conexão serial: ${error.message}`);
     }
   }
 

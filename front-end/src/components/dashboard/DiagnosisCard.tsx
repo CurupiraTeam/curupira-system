@@ -23,7 +23,7 @@ export function DiagnosisCard({ summary, onReport }: DiagnosisCardProps) {
         </div>
 
         {typeof summary.aqiValue === 'number' && (
-          <div className={`w-fit rounded-3xl bg-gradient-to-br ${statusGradient[summary.aqiStatus] || 'from-emerald-400 to-teal-500'} px-5 py-4 text-slate-950 sm:text-right shadow-lg shadow-black/10`}>
+          <div className={`w-fit rounded-3xl bg-gradient-to-br ${summary.aqiStatus ? statusGradient[summary.aqiStatus] : 'from-emerald-400 to-teal-500'} px-5 py-4 text-slate-950 sm:text-right shadow-lg shadow-black/10`}>
             <p className="text-xs font-black uppercase tracking-[0.2em] opacity-80">IQA</p>
             <strong className="block text-4xl font-black leading-none">{summary.aqiValue}</strong>
             <span className="text-sm font-black">{summary.aqiStatus || 'Sem status'}</span>

@@ -5,8 +5,9 @@ import {
   Trees, MapPin, Radio, ChartLine, SlidersHorizontal, User
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { getSocketUrl } from '../../services/api/endpoints';
 
-const socket = io('http://localhost:3000');
+const socket = io(getSocketUrl());
 
 // ── Animated counter hook ─────────────────────────────────────────────────────
 function useAnimatedNumber(target: number, duration = 600) {

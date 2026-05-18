@@ -11,6 +11,7 @@ import { NotFound } from './pages/NotFound';
 import { OptionsPage } from './pages/Options/OptionsPage';
 import { RegisterPage } from './pages/Register/RegisterPage';
 import KidsArea from './pages/KidsArea/KidsArea';
+import Dashboard from './pages/Dashboard/Dashboard';
 
 export default function App() {
   return (
@@ -42,6 +43,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <HomePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/arduino"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
             </ProtectedRoute>
           }
         />
