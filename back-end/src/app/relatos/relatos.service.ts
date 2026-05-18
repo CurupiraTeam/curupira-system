@@ -6,14 +6,32 @@ export class RelatosService {
   constructor(private readonly prisma: PrismaService) {}
 
   async createUsuarioRelato(usuarioId: string, data: any, file?: Express.Multer.File) {
+    // Robust resolution of categoria_id to support both numeric and text slug formats
+    let categoriaId = 1;
+    if (data.categoria_id) {
+      const parsed = parseInt(data.categoria_id, 10);
+      if (!isNaN(parsed)) {
+        categoriaId = parsed;
+      } else {
+        const slug = String(data.categoria_id).toLowerCase().trim();
+        if (slug === 'fumaca' || slug === 'fumaça') {
+          categoriaId = 1;
+        } else if (slug === 'queimada') {
+          categoriaId = 2;
+        } else if (slug === 'cheiro-forte-quimico' || slug === 'quimico') {
+          categoriaId = 3;
+        }
+      }
+    }
+
     const relato = await this.prisma.relatoUsuario.create({
       data: {
-        usuario_id: usuarioId,
-        categoria_id: data.categoria_id ? parseInt(data.categoria_id) : 1,
-        latitude: parseFloat(data.latitude),
-        longitude: parseFloat(data.longitude),
-        descricao: data.descricao,
-        referencia_endereco: data.referencia_endereco,
+        usuario: { connect: { id: usuarioId } },
+        categoria: { connect: { id: categoriaId } },
+        latitude: parseFloat(data.latitude) || 0,
+        longitude: parseFloat(data.longitude) || 0,
+        descricao: data.descricao || null,
+        referencia_endereco: data.referencia_endereco || null,
       },
     });
 
@@ -21,7 +39,7 @@ export class RelatosService {
       await this.prisma.midiaRelato.create({
         data: {
           url: `/uploads/${file.filename}`,
-          relato_usuario_id: relato.id,
+          relato_usuario: { connect: { id: relato.id } },
         },
       });
     }

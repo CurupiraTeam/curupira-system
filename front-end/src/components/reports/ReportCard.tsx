@@ -10,14 +10,14 @@ export function ReportCard({ report }: { report: Report }) {
   const location = report.approximateLocation || [report.neighborhood, report.city].filter(Boolean).join(', ') || report.region || 'Local aproximado';
 
   return (
-    <article className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+    <article className="rounded-3xl border border-slate-200/60 bg-white/95 p-5 shadow-md shadow-slate-200/20 hover:border-emerald-400/40 hover:shadow-lg transition-all duration-300">
       <div className="flex items-center justify-between gap-3">
         <div className="flex min-w-0 items-center gap-3">
-          <div className={`rounded-2xl p-3 ${visual.colorClass}`}>
+          <div className={`rounded-2xl p-3 ${visual.colorClass} shadow-sm`}>
             <Icon size={22} aria-hidden="true" />
           </div>
           <div className="min-w-0">
-            <h3 className="truncate font-black text-slate-950">{report.categoryName}</h3>
+            <h3 className="truncate font-black text-slate-900">{report.categoryName}</h3>
             <p className="flex items-center gap-1 text-sm text-slate-500">
               <MapPin size={14} aria-hidden="true" /> <span className="truncate">{location}</span>
             </p>

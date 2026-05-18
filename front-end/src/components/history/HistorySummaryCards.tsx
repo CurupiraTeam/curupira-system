@@ -15,9 +15,9 @@ export function HistorySummaryCards({ stats }: { stats: HistoricalStats[] }) {
   return (
     <div className="grid gap-4">
       {cards.map(([label, value, text]) => (
-        <article key={label} className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <article key={label} className="rounded-[2.5rem] border border-emerald-100/60 bg-white/90 p-6 shadow-xl shadow-slate-200/30 text-slate-900">
           <p className="text-sm font-bold uppercase tracking-[0.2em] text-emerald-700">{label}</p>
-          <strong className="mt-3 block text-4xl font-black text-slate-950">{value}</strong>
+          <strong className="mt-3 block text-4xl font-black text-slate-900">{value}</strong>
           <p className="mt-2 text-sm leading-6 text-slate-600">{text}</p>
         </article>
       ))}
