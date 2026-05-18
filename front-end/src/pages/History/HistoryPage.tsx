@@ -12,11 +12,13 @@ export function HistoryPage() {
   const recentReports = (reports.data || []).slice(0, 6);
 
   return (
-    <section className="px-4 py-8 pb-24 md:px-6 md:py-12">
+    <section className="px-4 py-8 pb-24 md:px-6 md:py-12 text-slate-800">
       <div className="mx-auto max-w-7xl">
         <div className="mb-6">
-          <p className="text-sm font-black uppercase tracking-[0.2em] text-emerald-700">Histórico</p>
-          <h1 className="mt-2 text-3xl font-black text-slate-950 md:text-4xl">Tendências, alertas e relatos ao longo do tempo</h1>
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-emerald-700 border border-emerald-100">
+            Histórico
+          </span>
+          <h1 className="mt-3 text-3xl font-black text-slate-900 md:text-4xl">Tendências, alertas e relatos ao longo do tempo</h1>
           <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600">
             Acompanhe o comportamento recente do IQA, volume de relatos e alertas oficiais sem excesso de detalhe técnico.
           </p>
@@ -41,7 +43,7 @@ export function HistoryPage() {
         )}
 
         <div className="mt-10">
-          <h2 className="mb-5 text-2xl font-black text-slate-950">Últimos registros armazenados</h2>
+          <h2 className="mb-5 text-2xl font-black text-slate-900">Últimos registros armazenados</h2>
           <RecentRecordsList reports={recentReports} />
         </div>
       </div>

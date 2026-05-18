@@ -32,13 +32,13 @@ export function StateView({ variant, title, description, action, compact = false
 
   return (
     <div
-      className={`rounded-3xl border border-slate-200 bg-white text-slate-950 shadow-sm ${
+      className={`rounded-[2.5rem] border border-slate-200 bg-white text-slate-950 shadow-xl shadow-slate-200/20 ${
         compact ? 'p-4' : 'p-6'
       }`}
       role={variant === 'error' || variant === 'unauthorized' ? 'alert' : 'status'}
     >
       <div className="flex items-start gap-3">
-        <div className="rounded-2xl bg-emerald-50 p-3 text-emerald-700">
+        <div className="rounded-2xl bg-emerald-50 p-3 text-emerald-700 border border-emerald-100">
           <Icon className={isLoading ? 'animate-spin' : undefined} size={22} aria-hidden="true" />
         </div>
         <div className="min-w-0 flex-1">
@@ -142,7 +142,7 @@ function FloatingState({ title, description, action, compact = false, variant, d
         type="button"
         aria-label="Fechar aviso"
         onClick={() => setVisible(false)}
-        className="absolute right-2 top-2 z-10 inline-flex items-center justify-center rounded-full bg-white/60 p-1 text-slate-700 shadow backdrop-blur hover:bg-white"
+        className="absolute right-2 top-2 z-10 inline-flex items-center justify-center rounded-full bg-slate-100/90 p-1.5 text-slate-600 hover:text-slate-950 shadow border border-slate-200/50 backdrop-blur hover:bg-slate-200"
       >
         <X size={16} aria-hidden="true" />
       </button>

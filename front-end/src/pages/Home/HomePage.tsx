@@ -75,7 +75,7 @@ export function HomePage() {
           animate="visible"
           className="grid gap-4 md:grid-cols-[1.1fr_0.9fr] lg:items-start lg:gap-6"
         >
-          <motion.div variants={fadeUp} className="rounded-[2rem] bg-slate-950 p-4 shadow-glow sm:p-5 lg:p-6">
+          <motion.div variants={fadeUp} className="rounded-[2.5rem] bg-white/80 border border-emerald-100/60 backdrop-blur-xl p-4 shadow-xl shadow-slate-200/30 sm:p-5 lg:p-6 text-slate-800">
             <DiagnosisCard summary={summary} onReport={() => setIsReportOpen(true)} />
             <div className="mt-4">
               <SummaryMetricGrid summary={summary} />

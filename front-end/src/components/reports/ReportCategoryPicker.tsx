@@ -3,6 +3,7 @@ import { FieldWrapper, SelectField } from '../ui/FormControls';
 interface ReportCategoryPickerProps {
   value: string;
   error?: string;
+  light?: boolean;
   onChange: (value: string) => void;
 }
 
@@ -12,12 +13,13 @@ const REPORT_CATEGORIES = [
   { id: 'cheiro-forte-quimico', nome: 'Cheiro Forte Químico' }
 ];
 
-export function ReportCategoryPicker({ value, error, onChange }: ReportCategoryPickerProps) {
+export function ReportCategoryPicker({ value, error, light, onChange }: ReportCategoryPickerProps) {
   return (
-    <FieldWrapper label="Tipo da ocorrência" error={error}>
+    <FieldWrapper label="Tipo da ocorrência" error={error} light={light}>
       <SelectField
         value={value}
         onChange={(event) => onChange(event.target.value)}
+        light={light}
         className="[&>option]:bg-white [&>option]:text-slate-900"
       >
         <option value="" disabled>

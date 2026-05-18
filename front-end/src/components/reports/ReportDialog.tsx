@@ -16,7 +16,7 @@ export function ReportDialog({ open, onClose, onSuccess }: ReportDialogProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-end justify-center bg-slate-950/70 px-3 pb-20 pt-16 backdrop-blur-sm sm:items-center sm:p-6"
+          className="fixed inset-0 z-[100] grid place-items-center overflow-y-auto bg-slate-900/60 p-4 backdrop-blur-sm"
           role="dialog"
           aria-modal="true"
           aria-label="Fazer relato ambiental"
@@ -26,12 +26,12 @@ export function ReportDialog({ open, onClose, onSuccess }: ReportDialogProps) {
             animate={{ y: 0, opacity: 1, scale: 1 }}
             exit={{ y: 80, opacity: 0, scale: 0.98 }}
             transition={{ type: 'spring', stiffness: 260, damping: 26 }}
-            className="relative max-h-[92vh] w-full max-w-xl overflow-y-auto rounded-[2rem] bg-slate-950 shadow-2xl"
+            className="relative w-full max-w-xl rounded-[2rem] bg-white shadow-2xl md:max-w-4xl my-auto"
           >
             <button
               type="button"
               onClick={onClose}
-              className="absolute right-4 top-4 z-10 rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20 focus:outline-none focus:ring-4 focus:ring-emerald-300"
+              className="absolute right-4 top-4 z-10 rounded-full bg-slate-100 p-2 text-slate-500 hover:text-slate-800 transition hover:bg-slate-200 focus:outline-none focus:ring-4 focus:ring-emerald-300"
               aria-label="Fechar relato"
             >
               <X size={20} aria-hidden="true" />
