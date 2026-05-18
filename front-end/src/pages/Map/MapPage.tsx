@@ -30,11 +30,13 @@ export function MapPage() {
   }, []);
 
   return (
-    <section className="px-4 py-8 pb-24 md:px-6 md:py-12">
+    <section className="px-4 py-8 pb-24 md:px-6 md:py-12 text-slate-800">
       <div className="mx-auto max-w-7xl">
         <div className="mb-6">
-          <p className="text-sm font-black uppercase tracking-[0.2em] text-emerald-700">Mapa</p>
-          <h1 className="mt-2 text-3xl font-black text-slate-950 md:text-4xl">Mapa colaborativo de ocorrências</h1>
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-emerald-700 border border-emerald-100">
+            Mapa
+          </span>
+          <h1 className="mt-3 text-3xl font-black text-slate-900 md:text-4xl">Mapa colaborativo de ocorrências</h1>
           <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600">
             Visualize relatos georreferenciados, alertas oficiais e dados integrados preparados para consulta por área do mapa.
           </p>
@@ -62,18 +64,18 @@ export function MapPage() {
           </div>
 
           <aside className="grid content-start gap-4">
-            <div className="rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
+            <div className="rounded-[2.5rem] border border-emerald-100 bg-white/95 p-5 shadow-xl shadow-slate-200/30">
               <p className="flex items-center gap-2 text-sm font-black text-emerald-700">
                 <Crosshair size={18} aria-hidden="true" /> Área visível
               </p>
-              <strong className="mt-3 block text-3xl font-black text-slate-950">{markers.length}</strong>
+              <strong className="mt-3 block text-3xl font-black text-slate-900">{markers.length}</strong>
               <p className="mt-2 text-sm leading-6 text-slate-600">
                 Marcadores válidos em {Object.keys(groupedMarkers).length} grupo(s) aproximados, evitando sobrecarga visual quando relatos estão muito próximos.
               </p>
             </div>
             <button
               type="button"
-              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-950 px-4 py-3 text-sm font-black text-white transition hover:bg-emerald-700"
+              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-emerald-700 hover:bg-emerald-600 px-4 py-3 text-sm font-black text-white transition shadow-lg shadow-emerald-700/25 active:scale-95"
               aria-label="Usar minha localização no mapa"
             >
               <LocateFixed size={18} aria-hidden="true" /> Usar minha localização

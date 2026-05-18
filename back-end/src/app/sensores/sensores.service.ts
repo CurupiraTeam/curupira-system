@@ -36,14 +36,41 @@ export class SensoresService {
       orderBy: { lido_em: 'desc' }
     });
 
-    const valorReal = ultimaLeitura ? ultimaLeitura.valor : 0;
+    // Se não houver leituras reais, usamos o valor base simulado (37) para o painel não ficar zerado
+    const valorReal = ultimaLeitura ? ultimaLeitura.valor : 37;
 
-    return [
+    const additionalMetrics = [
       { label: 'Material particulado PM2.5', value: valorReal, unit: 'µg/m³', safeLimit: 25 },
       { label: 'Material particulado PM10', value: 68, unit: 'µg/m³', safeLimit: 50 },
       { label: 'Monóxido de carbono', value: 5, unit: 'ppm', safeLimit: 9 },
       { label: 'Dióxido de nitrogênio', value: 42, unit: 'ppb', safeLimit: 53 }
     ];
+
+    // Cálculo simplificado de AQI (IQA) baseado no PM2.5
+    // Faixas típicas US EPA PM2.5 (µg/m³):
+    // 0 - 12.0   -> AQI 0 - 50 (Bom)
+    // 12.1 - 35.4 -> AQI 51 - 100 (Moderado)
+    // 35.5 - 55.4 -> AQI 101 - 150 (Inadequado para grupos sensíveis)
+    // 55.5 - 150.4 -> AQI 151 - 200 (Ruim)
+    let aqiValue = 78;
+    if (valorReal <= 12) {
+      aqiValue = Math.round((50 / 12) * valorReal);
+    } else if (valorReal <= 35.4) {
+      aqiValue = Math.round(50 + ((100 - 50) / (35.4 - 12)) * (valorReal - 12));
+    } else if (valorReal <= 55.4) {
+      aqiValue = Math.round(100 + ((150 - 100) / (55.4 - 35.4)) * (valorReal - 35.4));
+    } else if (valorReal <= 150.4) {
+      aqiValue = Math.round(150 + ((200 - 150) / (150.4 - 55.4)) * (valorReal - 55.4));
+    } else {
+      aqiValue = Math.round(200 + ((300 - 200) / (250.4 - 150.4)) * (valorReal - 150.4));
+    }
+
+    return {
+      pm25: valorReal,
+      aqiValue,
+      updatedAt: ultimaLeitura ? ultimaLeitura.lido_em.toISOString() : new Date().toISOString(),
+      additionalMetrics
+    };
   }
 
   async createLog(data: { dispositivo_id: string, nivel?: NivelLog, mensagem: string, detalhes?: any }) {

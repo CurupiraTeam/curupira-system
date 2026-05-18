@@ -4,9 +4,11 @@ import { ReportCard } from '../reports/ReportCard';
 
 export function LatestReportsPanel({ reports }: { reports: Report[] }) {
   return (
-    <div className="rounded-[2rem] bg-white p-5 shadow-sm ring-1 ring-slate-200 sm:p-6">
-      <p className="text-xs font-black uppercase tracking-[0.2em] text-emerald-700">Últimos relatos</p>
-      <h2 className="mt-1 text-xl font-black text-slate-950">Movimentação próxima</h2>
+    <div className="rounded-[2.5rem] bg-white/80 border border-emerald-100/60 backdrop-blur-xl p-5 shadow-xl shadow-slate-200/30 sm:p-6 text-slate-900">
+      <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-emerald-700 border border-emerald-100">
+        Últimos relatos
+      </span>
+      <h2 className="mt-3 text-xl font-black text-slate-900">Movimentação próxima</h2>
       <div className="mt-4 grid gap-3">
         {reports.length ? (
           reports.slice(0, 3).map((report) => <ReportCard key={report.id} report={report} />)

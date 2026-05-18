@@ -15,4 +15,9 @@ export class ArduinoGateway {
   handleSensorUpdate(payload: { valor: string; timestamp: string }) {
     this.server.emit('dados_arduino', payload);
   }
+
+  @OnEvent('relatos.change')
+  handleRelatosChange() {
+    this.server.emit('relatos_change');
+  }
 }

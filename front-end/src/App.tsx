@@ -10,12 +10,15 @@ import { MapPage } from './pages/Map/MapPage';
 import { NotFound } from './pages/NotFound';
 import { OptionsPage } from './pages/Options/OptionsPage';
 import { RegisterPage } from './pages/Register/RegisterPage';
+import KidsArea from './pages/KidsArea/KidsArea';
+import Dashboard from './pages/Dashboard/Dashboard';
 
 export default function App() {
   return (
     <Routes>
       {/* Rotas públicas */}
       <Route path="/" element={<LandingPage />} />
+      <Route path="/kids/*" element={<KidsArea />} />
       <Route
         path="/login"
         element={
@@ -40,6 +43,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <HomePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/arduino"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
             </ProtectedRoute>
           }
         />
