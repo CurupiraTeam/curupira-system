@@ -23,7 +23,7 @@ export const API_ROUTES = {
 
 export function getApiBaseUrl() {
   const env = (import.meta as ImportMeta & { env?: Record<string, string | undefined> }).env;
-  return env?.VITE_API_BASE_URL?.replace(/\/$/, '') || 'http://localhost:3000';
+  return env?.VITE_API_BASE_URL?.replace(/\/$/, '') || 'http://localhost:4002';
 }
 
 export function getSocketUrl() {

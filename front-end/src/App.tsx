@@ -10,12 +10,14 @@ import { MapPage } from './pages/Map/MapPage';
 import { NotFound } from './pages/NotFound';
 import { OptionsPage } from './pages/Options/OptionsPage';
 import { RegisterPage } from './pages/Register/RegisterPage';
+import KidsArea from './pages/KidsArea/KidsArea';
 
 export default function App() {
   return (
     <Routes>
       {/* Rotas públicas */}
       <Route path="/" element={<LandingPage />} />
+      <Route path="/kids/*" element={<KidsArea />} />
       <Route
         path="/login"
         element={

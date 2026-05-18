@@ -11,7 +11,7 @@ const socket = io('http://localhost:3000');
 // ── Animated counter hook ─────────────────────────────────────────────────────
 function useAnimatedNumber(target: number, duration = 600) {
   const [display, setDisplay] = useState(target);
-  const rafRef   = useRef<number>();
+  const rafRef   = useRef<number | undefined>(undefined);
   const startRef = useRef<number | null>(null);
   const fromRef  = useRef(target);
 

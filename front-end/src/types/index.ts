@@ -1,6 +1,6 @@
-export type { AuthResponse, AuthState, LoginPayload, RegisterPayload, User } from './auth.types';
+export type { AuthResponse, AuthState, LoginPayload, RegisterPayload, User } from './auth.service';
 export type { APIState, ApiListResponse, ApiRequestOptions, NormalizedApiError } from './api.types';
-export type { Category } from './category.types';
+export type { Category } from './category.type';
 export type {
   AQIStatus,
   CreateUserReportPayload,
